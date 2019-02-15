@@ -1,0 +1,32 @@
+#Pressao Inicial do Reservatorio
+1500
+#Vazao:
+100
+#Permeabilidade:
+200
+#Viscosidade:
+1
+#Raio do Poco:
+0.5
+#Fator Volume Formacao (Bo):
+1
+#Compressao Total (ct):
+0.000005
+#Porosidade:
+0.5
+#Altura do Reservatorio (h):
+20
+#Latitude:
+0
+#Longitude:
+0
+#Fator de Pelicula (S):
+5
+#Raio Externo (se for infinito, deixar 0):
+0
+#Fator de Forma de Dietz (se for infinito, deixar 0):
+0
+#Area do Reservatorio (se for infinito, deixar 0):
+0
+#Unidades de medida (0 -> ANP, 1 -> OILFIELD):
+0
