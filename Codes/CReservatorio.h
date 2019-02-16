@@ -8,6 +8,7 @@
 class CReservatorio {
 protected:
 	///Propriedades do poco/reservatorio (nao variam)
+	std::string NomeReser;
 	double PressaoInicial;
 	double Vazao;
 	double Permeabilidade;
@@ -31,13 +32,13 @@ protected:
 public:
 	CReservatorio() {}
 
-	CReservatorio(double _PressaoInicial, double _Vazao, double _Permeabilidade, double _Viscosidade, double _RaioPoco,
-		double _FatorVolForm, double _ComprTotal, double _Porosidade, double _AlturaReser,
+	CReservatorio(std::string _Nome, double _PressaoInicial, double _Vazao, double _Permeabilidade, double _Viscosidade, 
+		double _RaioPoco, double _FatorVolForm, double _ComprTotal, double _Porosidade, double _AlturaReser,
 		double _Latitude, double _Longitude, double _FatorPelicula, bool _anp, double _RaioExterno = 0,
 		double _FatorForma = 0, double _Area = 0) :
-		PressaoInicial(_PressaoInicial), Vazao(_Vazao), Permeabilidade(_Permeabilidade), Viscosidade(_Viscosidade), RaioPoco(_RaioPoco),
-		FatorVolForm(_FatorVolForm), ComprTotal(_ComprTotal), Porosidade(_Porosidade),
-		AlturaReser(_AlturaReser), Latitude(_Latitude), Longitude(_Longitude),
+		NomeReser(_Nome), PressaoInicial(_PressaoInicial), Vazao(_Vazao), Permeabilidade(_Permeabilidade), 
+		Viscosidade(_Viscosidade), RaioPoco(_RaioPoco), FatorVolForm(_FatorVolForm), ComprTotal(_ComprTotal), 
+		Porosidade(_Porosidade), AlturaReser(_AlturaReser), Latitude(_Latitude), Longitude(_Longitude),
 		FatorPelicula(_FatorPelicula), anp(_anp), RaioExterno(_RaioExterno), FatorForma(_FatorForma), Area(_Area)
 	{
 	}
@@ -46,7 +47,8 @@ public:
 		LerDados(NomeArquivo);
 	}
 
-protected:
+	std::string Nome() { return NomeReser; }
+
 	void LerDados(std::string NomeArquivo);
 };
 

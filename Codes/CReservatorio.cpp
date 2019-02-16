@@ -1,11 +1,12 @@
 #include "CReservatorio.h"
 
 void CReservatorio::LerDados(std::string NomeArquivo) {
-	//NomeArquivo = NomeArquivo+".txt";
+	NomeArquivo = "C:/Users/nicho/Source/Repos/NicholasAlmeidaPinto/ProgramacaoPratica/Codes/Dados/" + NomeArquivo+".txt";
 	std::ifstream f(NomeArquivo);
 	std::string line;
 	int a;
 
+	std::getline(f, line); std::getline(f, line); NomeReser = line;
 	std::getline(f, line); std::getline(f, line); PressaoInicial = std::stod(line);
 	std::getline(f, line); std::getline(f, line); Vazao = std::stod(line);
 	std::getline(f, line); std::getline(f, line); Permeabilidade = std::stod(line);

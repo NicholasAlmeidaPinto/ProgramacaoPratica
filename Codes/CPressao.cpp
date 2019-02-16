@@ -7,7 +7,7 @@ void CPressao::CalcPressaoAdmen() {
 	else
 		ConstPressaoAdmen = Permeabilidade * AlturaReser / (141.2*
 			Vazao*FatorVolForm*Viscosidade);
-	std::cout << "\nPressao Admen: " << ConstPressaoAdmen;
+	//std::cout << "\nPressao Admen: " << ConstPressaoAdmen;
 }
 
 double CPressao::CalcDistAdmen(double _Dist) {
@@ -24,7 +24,7 @@ void CPressao::CalcTempoAdmen() {
 	else
 		ConstTempoAdmen = 0.0002637 * Permeabilidade / (Porosidade*
 			Viscosidade*ComprTotal*RaioPoco*RaioPoco);
-	std::cout << "\nTempo Admen: " << ConstTempoAdmen;
+	//std::cout << "\nTempo Admen: " << ConstTempoAdmen;
 }
 
 double CPressao::ReservatorioInfinito(double _Tempo, double _Dist) {
