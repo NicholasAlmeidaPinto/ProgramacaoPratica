@@ -32,3 +32,6 @@ Santos
 0
 #Unidades de medida (0 -> ANP, 1 -> OILFIELD):
 0
+#1-Reservatorio Infinito			2-Reservatorio Circular com Manutencao da Pressao
+#3-Reservatorio Circular Selado		4-Reservaotio com Geometria Arbitraria e Selado
+1

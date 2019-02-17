@@ -27,4 +27,5 @@ void CReservatorio::LerDados(std::string NomeArquivo) {
 		anp = true;
 	else
 		anp = false;
+	std::getline(f, line); std::getline(f, line); std::getline(f, line); ModeloReservatorio = std::stoi(line);
 }

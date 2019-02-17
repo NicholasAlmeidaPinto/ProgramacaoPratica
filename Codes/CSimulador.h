@@ -5,6 +5,8 @@
 #include "CPressao.h"
 #include <iostream>
 #include <string>
+#include <math.h>  //sqrt
+#include <iomanip> //setw
 
 class CSimulador {
 	private:
@@ -23,6 +25,8 @@ class CSimulador {
 		void DestruirReservatorio();
 		void MostrarReservatorios();
 		void SalvarDados();
+		double DistanciaEuclidiana(double lat0, double long0, double lat1, double lon1);
+		void PressaoVariandoTempo();
 };
 
 #endif

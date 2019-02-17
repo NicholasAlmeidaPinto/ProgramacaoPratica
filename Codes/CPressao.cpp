@@ -35,6 +35,12 @@ double CPressao::ReservatorioInfinito(double _Tempo, double _Dist) {
 	TempoAdmen = _Tempo * ConstTempoAdmen;
 	DistAdmen = CalcDistAdmen(_Dist);
 
+	double S;
+	if (DistAdmen == 1)
+		S = FatorPelicula;
+	else
+		S = 0;
+
 	PressaoAdmen = 0.5 * log(4 * TempoAdmen / (DistAdmen*exp(gama)));
 	return PressaoDimen(PressaoAdmen + FatorPelicula);
 }
@@ -54,6 +60,12 @@ double CPressao::ReservatorioCircularManutencaoPressao(double _Tempo, double _Di
 	TempoAdmen = _Tempo * ConstTempoAdmen;
 	DistAdmen = CalcDistAdmen(_Dist);
 
+	double S;
+	if (DistAdmen == 1)
+		S = FatorPelicula;
+	else
+		S = 0;
+
 	TempoAdmenA = TempoAdmen / (pi*RaioExternoAd*RaioExternoAd);
 
 	if (TempoAdmenA < 0.1)
@@ -61,7 +73,7 @@ double CPressao::ReservatorioCircularManutencaoPressao(double _Tempo, double _Di
 	else
 		PressaoAdmen = log(RaioExternoAd);
 
-	return PressaoDimen(PressaoAdmen + FatorPelicula);
+	return PressaoDimen(PressaoAdmen + S);
 }
 
 double CPressao::ReservatorioCircularSelado(double _Tempo, double _Dist) {
@@ -78,6 +90,12 @@ double CPressao::ReservatorioCircularSelado(double _Tempo, double _Dist) {
 
 	TempoAdmen = _Tempo * ConstTempoAdmen;
 	DistAdmen = CalcDistAdmen(_Dist);
+
+	double S;
+	if (DistAdmen == 1)
+		S = FatorPelicula;
+	else
+		S = 0;
 
 	TempoAdmenA = TempoAdmen / (pi*Red*Red);
 
@@ -117,6 +135,12 @@ double CPressao::GeometriaArbitrariaSelado(double _Tempo, double _Dist) {
 	TempoAdmen = _Tempo * ConstTempoAdmen;
 	DistAdmen = CalcDistAdmen(_Dist);
 
+	double S;
+	if (DistAdmen == 1)
+		S = FatorPelicula;
+	else
+		S = 0;
+
 	TempoAdmenA = TempoAdmen / (pi*Red*Red);
 
 	if (TempoAdmenA < 0.1)
@@ -132,4 +156,23 @@ void CPressao::MostrarVariaveis() {
 	cout << "\nVazao: " << Vazao;
 	cout << "\nPermeabilidade: " << Permeabilidade;
 
+}
+
+double CPressao::GerarPressao(double _Tempo, double _Dist) {
+	double P;
+	switch (ModeloReservatorio) {
+		case 1:
+			P = ReservatorioInfinito(_Tempo, _Dist);
+			break;
+		case 2:
+			P = ReservatorioCircularManutencaoPressao(_Tempo, _Dist);
+			break;
+		case 3:
+			P = ReservatorioCircularSelado(_Tempo, _Dist);
+			break;
+		case 4:
+			P = GeometriaArbitrariaSelado(_Tempo, _Dist);
+			break;
+	}
+	return P;
 }

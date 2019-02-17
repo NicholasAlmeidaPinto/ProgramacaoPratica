@@ -10,11 +10,11 @@ int main()
 	/*
 	string nome = "Reservatorio0";
 	CPressao pressao(nome);
-	cout << "\nQueda de pressao: " << pressao.ReservatorioInfinito(100,10);
-	cin.get()//*/
+	cout << "\nQueda de pressao: " << pressao.GerarPressao(500000,0);
+	cin.get();//*/
 	CSimulador simulador;
 	simulador.Menu();
-
+	
 
 	return 0;
 }

@@ -31,14 +31,19 @@ public:
 	///Destrutor 
 	~CPressao() {}
 
+	double GerarPressao(double _Tempo, double _Dist);
+
+	
+
+	void MostrarVariaveis();
+
+private:
+	//Somente eh chamado pelo GerarPressao(...)
 	double ReservatorioInfinito(double _Tempo, double _Dist);
 	double ReservatorioCircularManutencaoPressao(double _Tempo, double _Dist);
 	double ReservatorioCircularSelado(double _Tempo, double _Dist);
 	double GeometriaArbitrariaSelado(double _Tempo, double _Dist);
 
-	void MostrarVariaveis();
-
-private:
 	///Obter variaveis admensionais
 	void CalcPressaoAdmen();
 	double CalcDistAdmen(double _Dist);
