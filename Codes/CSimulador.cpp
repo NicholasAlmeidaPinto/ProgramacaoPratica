@@ -2,13 +2,9 @@
 
 using namespace std;
 
-
 void CSimulador::Menu() {
 	int Opt;
 	bool RodarMenu = true;
-	//cout << "Entre com o numero de reservatorios: ";
-	//cin >> numReser;
-	//reservatorios.resize(numReser);
 	while (RodarMenu) {
 		system("cls");
 		cout << "SIMULADOR DE PRESSAO EM RESERVATORIO DE PETROLEO"
@@ -18,12 +14,12 @@ void CSimulador::Menu() {
 		else
 			cout << "N";
 			
-		cout << "\n1-ADICIONAR RESERVATORIO"
+		cout << "\n\n1-ADICIONAR RESERVATORIO"
 			<< "\n2-TROCAR RESERVATORIO"
 			<< "\n3-EXCLUIR RESERVATORIO"
 			<< "\n4-SALVAR/NAO SALVAR DADOS"
-			<< "\n\n5-MOSTRAR RESERVATORIOS"
-			<< "\n6-CALCULAR PRESSAO VARIANDO O TEMPO"
+			<< "\n5-MOSTRAR RESERVATORIOS"
+			<< "\n\n6-CALCULAR PRESSAO VARIANDO O TEMPO"
 			<< "\n7-CALCULAR PRESSAO VARIANDO A DISTANCIA"
 			<< "\n\n0-SAIR"
 			<<"\n----------------------------------------"
@@ -52,6 +48,7 @@ void CSimulador::Menu() {
 				PressaoVariandoTempo();
 				break;
 			case 7:
+				PressaoVariandoEspaco();
 				break;
 			case 0:
 				RodarMenu = false;
@@ -81,10 +78,6 @@ void CSimulador::CriarReservatorio() {
 
 void CSimulador::DestruirReservatorio() {
 	MostrarReservatorios();
-	//int posicao;
-	//cout << "\nReservatorio a ser excluido: ";
-	//cin >> posicao;
-	//reservatorios.erase(posicao);
 	reservatorios.pop_back();
 }
 
@@ -103,48 +96,113 @@ void CSimulador::MostrarReservatorios() {
 	}
 }
 
-double DistanciaEuclidiana(double lat0, double lon0, double lat1, double lon1) {
-	return sqrt((lat0 - lat1)*(lat0 - lat1) + (lon0 - lon1)*(lon0 - lon1));
-}
-///*
 void CSimulador::PressaoVariandoTempo() {
-	int grade = 100;
-	system("cls");
-	cout << "PRESSAO VARIANDO NO TEMPO";
-
-	cout << "\nLatitude: ";
-	double lat; cin >> lat;
-	cout << "\nLongitude: ";
-	double lon; cin >> lon;
-
-	cout << "\nInicio do tempo (segundos): ";
-	double inicio; cin >> inicio;
-	cout << "\nFim do tempo (segundos): ";
-	double fim; cin >> fim;
-
-	vector<double> tempos;
-	for (int i = 0; i < grade; i++) {
-		tempos.push_back( inicio + i * (fim - inicio) / grade);
+	if ((int)reservatorios.size() == 0) {
+		cout << "\nNENHUM RESERVATORIO CADASTRADO";
+		cin.get();
 	}
+	else {
+		int grade = 100;
+		system("cls");
+		cout << "PRESSAO VARIANDO NO TEMPO";
 
-	vector<double> PressaoTotal;
-	for (int i = 0; i < grade; i++)
-		PressaoTotal.push_back(0);
-	
-	double DistanciaPoco;
-	for (int i = 0; i < (int) reservatorios.size(); i++) {
-		double lat0 = reservatorios[i].latitude();
-		double lon0 = reservatorios[i].longitude();
-		//DistanciaPoco = DistanciaEuclidiana(lat0, lon0, lat, lon);
-		DistanciaPoco = sqrt((lat0 - lat)*(lat0 - lat) + (lon0 - lon)*(lon0 - lon));
-		for (int k = 0; k < grade; k++)
-			PressaoTotal[k] += reservatorios[i].GerarPressao(tempos[k], DistanciaPoco);
+
+		cout << "\nLatitude: ";
+		double lat; cin >> lat;
+		cout << "\nLongitude: ";
+		double lon; cin >> lon;
+
+		cout << "\nInicio do tempo (segundos): ";
+		double inicio; cin >> inicio;
+		cout << "\nFim do tempo (segundos): ";
+		double fim; cin >> fim;
+
+		vector<double> tempos;
+		for (int i = 0; i < grade; i++) {
+			tempos.push_back(inicio + i * (fim - inicio) / grade);
+		}
+
+		vector<double> PressaoTotal;
+		for (int i = 0; i < grade; i++)
+			PressaoTotal.push_back(0);
+
+		double DistanciaPoco;
+		for (int i = 0; i < (int)reservatorios.size(); i++) {
+			double lat0 = reservatorios[i].latitude();
+			double lon0 = reservatorios[i].longitude();
+			DistanciaPoco = DistanciaEuclidiana(lat0, lon0, lat, lon);
+			//DistanciaPoco = sqrt((lat0 - lat)*(lat0 - lat) + (lon0 - lon)*(lon0 - lon));
+			for (int k = 0; k < grade; k++)
+				PressaoTotal[k] += reservatorios[i].GerarPressao(tempos[k], DistanciaPoco);
+		}
+
+		cout << "\nValores da Pressao:";
+		for (int i = 0; i < grade; i++)
+			cout << "\n" << setw(8) << tempos[i] << ": " << setw(8) << PressaoTotal[i];
+		cout << "\n----------------\nDigite algo para continuar\n-->";
+		//cin.get();
+		string abcd; cin >> abcd;
 	}
+}
 
-	cout << "\nValores da Pressao:";
-	for (int i = 0; i < grade; i++) 
-		cout << "\n" << setw(8)<<tempos[i] << ": " << setw(8) <<  PressaoTotal[i];
-	cout << "\n----------------\nDigite algo para continuar\n-->";
-	//cin.get();
-	string abcd; cin >> abcd;
-}//*/
+void CSimulador::PressaoVariandoEspaco() {
+	if ((int)reservatorios.size() == 0) {
+		cout << "\nNENHUM RESERVATORIO CADASTRADO";
+		cin.get();
+	}
+	else {
+		///Iniciar variaveis
+		vector<double> lat;
+		vector<double> lon;
+		vector<double> PressaoTotal;
+		double tempoSimulacao;
+		int grade = 100; ///numero de pontos para simulacao
+		double DistanciaPoco; ///distancia euclidiana para simulacao
+
+		system("cls");
+		cout << "PRESSAO VARIANDO NO ESPACO";
+
+		///Obter vetores das coordenadas
+		cout << "\nInicio da latitude analisada: ";
+		double inicio; cin >> inicio;
+		cout << "Fim da latitude analisada: ";
+		double fim; cin >> fim;
+		for (int i = 0; i < grade; i++)
+			lat.push_back(inicio + i * (fim - inicio) / grade);
+
+		cout << "\nInicio da longitude analisada: ";
+		cin >> inicio;
+		cout << "Fim da longitude analisada: ";
+		cin >> fim;
+		for (int i = 0; i < grade; i++)
+			lon.push_back(inicio + i * (fim - inicio) / grade);
+
+		///Tempo analisado para simulacao
+		cout << "\nTempo analisado (segundos): ";
+		cin >> tempoSimulacao;
+
+		///Iniciar vetor nulo de pressao para adicionar valores de todos os reservatorios com +=
+		for (int i = 0; i < grade; i++)
+			PressaoTotal.push_back(0);
+
+		///Calculo da pressao
+		for (int i = 0; i < (int)reservatorios.size(); i++) { ///loop dos reservatorios
+
+			///coordenadas do reservatorio analisado
+			double lat0 = reservatorios[i].latitude();
+			double lon0 = reservatorios[i].longitude();
+
+			for (int k = 0; k < grade; k++) {
+				DistanciaPoco = DistanciaEuclidiana(lat0, lon0, lat[k], lon[k]);
+				PressaoTotal[k] += reservatorios[i].GerarPressao(tempoSimulacao, DistanciaPoco);
+			}
+		}
+
+		cout << "\nValores da Pressao:\nCoordenadas: Pressao";
+		for (int i = 0; i < grade; i++)
+			cout << "\n(" << setw(8) << lat[i] << ";" << setw(8) << lon[i] << "): " << setw(8) << PressaoTotal[i];
+		cout << "\n----------------\nDigite algo para continuar\n-->";
+		//cin.get();
+		string abcd; cin >> abcd;
+	}
+}

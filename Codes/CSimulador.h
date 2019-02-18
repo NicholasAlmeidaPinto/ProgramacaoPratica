@@ -25,8 +25,11 @@ class CSimulador {
 		void DestruirReservatorio();
 		void MostrarReservatorios();
 		void SalvarDados();
-		double DistanciaEuclidiana(double lat0, double long0, double lat1, double lon1);
+		inline double DistanciaEuclidiana(double lat0, double lon0, double lat1, double lon1) {
+				return sqrt((lat0 - lat1)*(lat0 - lat1) + (lon0 - lon1)*(lon0 - lon1));
+		}
 		void PressaoVariandoTempo();
+		void PressaoVariandoEspaco();
 };
 
 #endif

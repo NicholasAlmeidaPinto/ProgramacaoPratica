@@ -7,7 +7,6 @@ void CPressao::CalcPressaoAdmen() {
 	else
 		ConstPressaoAdmen = Permeabilidade * AlturaReser / (141.2*
 			Vazao*FatorVolForm*Viscosidade);
-	//std::cout << "\nPressao Admen: " << ConstPressaoAdmen;
 }
 
 double CPressao::CalcDistAdmen(double _Dist) {
@@ -24,7 +23,6 @@ void CPressao::CalcTempoAdmen() {
 	else
 		ConstTempoAdmen = 0.0002637 * Permeabilidade / (Porosidade*
 			Viscosidade*ComprTotal*RaioPoco*RaioPoco);
-	//std::cout << "\nTempo Admen: " << ConstTempoAdmen;
 }
 
 double CPressao::ReservatorioInfinito(double _Tempo, double _Dist) {
@@ -42,7 +40,7 @@ double CPressao::ReservatorioInfinito(double _Tempo, double _Dist) {
 		S = 0;
 
 	PressaoAdmen = 0.5 * log(4 * TempoAdmen / (DistAdmen*exp(gama)));
-	return PressaoDimen(PressaoAdmen + FatorPelicula);
+	return PressaoDimen(PressaoAdmen + S);
 }
 
 double CPressao::ReservatorioCircularManutencaoPressao(double _Tempo, double _Dist) {
@@ -109,7 +107,7 @@ double CPressao::ReservatorioCircularSelado(double _Tempo, double _Dist) {
 			(3 * Red*Red*Red*Red - Red * Red*Red*Red*log(Red) - 2 * Red*Red*Red - 1) / (4 * (Red*Red - 1)*(Red*Red - 1));
 	}
 
-	return PressaoDimen(PressaoAdmen + FatorPelicula);
+	return PressaoDimen(PressaoAdmen + S);
 }
 
 double CPressao::GeometriaArbitrariaSelado(double _Tempo, double _Dist) {
@@ -148,7 +146,7 @@ double CPressao::GeometriaArbitrariaSelado(double _Tempo, double _Dist) {
 	else
 		PressaoAdmen = 2 * pi*TempoAdmenA +
 		0.5*Area * 4 / (exp(gama)*FatorForma*RaioPoco*RaioPoco);
-	return PressaoDimen(PressaoAdmen + FatorPelicula);
+	return PressaoDimen(PressaoAdmen + S);
 }
 
 void CPressao::MostrarVariaveis() {
