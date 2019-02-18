@@ -88,6 +88,35 @@ void CSimulador::SalvarDados() {
 		SalvaDados = true;
 }
 
+void CSimulador::SalvarTempo(std::vector<double> _Pressao, std::vector<double> _tempo, double _lat, double _lon) {
+	cout << "\nNome do arquivo para salvar os dados: ";
+	string _nome; cin >> _nome;
+
+	ofstream out;
+	_nome = "C:/Users/nicho/Source/Repos/NicholasAlmeidaPinto/ProgramacaoPratica/Codes/DadosGerados/" + _nome + ".data";
+	out.open(_nome);
+
+	out << "Latitude: " << _lat << "\nLongitude: " << _lon;
+	out << "\n\n  TEMPO--> PRESSAO";
+	for (int i = 0; i < (int)_Pressao.size(); i++) 
+		out << "\n" << setw(7) << _tempo[i] << "--> " << setw(7) << _Pressao[i];	
+	out.close();
+}
+
+void CSimulador::SalvarEspaco(std::vector<double> _Pressao, std::vector<double> _lat, std::vector<double> _lon, double _tempo) {
+	cout << "\nNome do arquivo para salvar os dados: ";
+	string _nome; cin >> _nome;
+
+	ofstream out;
+	_nome = "C:/Users/nicho/Source/Repos/NicholasAlmeidaPinto/ProgramacaoPratica/Codes/DadosGerados/" + _nome + ".data";
+	out.open(_nome);
+
+	out << "TEMPO: " << _tempo << " segundos\n(LATITUDE, LONGITUDE)--> PRESSAO";
+	for (int i = 0; i < (int)_Pressao.size(); i++) 
+		out << "\n(" << setw(8) << _lat[i] << ", " << setw(9) << _lon[i] << ")--> " << setw(7) << _Pressao[i];
+	out.close();
+}
+
 void CSimulador::MostrarReservatorios() {
 	cout << "------#-----#-----#-----#------"
 		<< "\nRESERVATORIOS/POCOS ADICIONADOS";
@@ -135,6 +164,9 @@ void CSimulador::PressaoVariandoTempo() {
 			for (int k = 0; k < grade; k++)
 				PressaoTotal[k] += reservatorios[i].GerarPressao(tempos[k], DistanciaPoco);
 		}
+
+		if (SalvaDados) 
+			SalvarTempo( PressaoTotal, tempos, lat, lon);
 
 		cout << "\nValores da Pressao:";
 		for (int i = 0; i < grade; i++)
@@ -197,6 +229,9 @@ void CSimulador::PressaoVariandoEspaco() {
 				PressaoTotal[k] += reservatorios[i].GerarPressao(tempoSimulacao, DistanciaPoco);
 			}
 		}
+
+		if (SalvaDados)
+			SalvarEspaco( PressaoTotal, lat, lon, tempoSimulacao);
 
 		cout << "\nValores da Pressao:\nCoordenadas: Pressao";
 		for (int i = 0; i < grade; i++)
