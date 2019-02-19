@@ -18,6 +18,8 @@ Santos
 0.5
 #Altura do Reservatorio (h):
 20
+#Efeito de Estocagem:  
+10
 #Latitude:
 0
 #Longitude:

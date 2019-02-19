@@ -16,6 +16,7 @@ void CReservatorio::LerDados(std::string NomeArquivo) {
 	std::getline(f, line); std::getline(f, line); ComprTotal = std::stod(line);
 	std::getline(f, line); std::getline(f, line); Porosidade = std::stod(line);
 	std::getline(f, line); std::getline(f, line); AlturaReser = std::stod(line);
+	std::getline(f, line); std::getline(f, line); Estocagem = std::stod(line);
 	std::getline(f, line); std::getline(f, line); Latitude = std::stod(line);
 	std::getline(f, line); std::getline(f, line); Longitude = std::stod(line);
 	std::getline(f, line); std::getline(f, line); FatorPelicula = std::stod(line);

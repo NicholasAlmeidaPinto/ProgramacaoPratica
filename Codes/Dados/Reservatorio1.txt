@@ -1,0 +1,39 @@
+#Nome do Poço/Reservatorio:
+Golfo do Mexico
+#Pressao Inicial do Reservatorio
+4412
+#Vazao:
+250
+#Permeabilidade:
+7,26
+#Viscosidade:
+0.8
+#Raio do Poco:
+0.198
+#Fator Volume Formacao (Bo):
+1.136
+#Compressao Total (ct):
+0.000017
+#Porosidade:
+0.039
+#Altura do Reservatorio (h):
+69
+#Efeito de Estocagem:  
+0.01014
+#Latitude:
+0
+#Longitude:
+0
+#Fator de Pelicula (S):
+5.75
+#Raio Externo (se for infinito, deixar 0):
+0
+#Fator de Forma de Dietz (se for infinito, deixar 0):
+33.4
+#Area do Reservatorio (se for infinito, deixar 0):
+0
+#Unidades de medida (0 -> ANP, 1 -> OILFIELD):
+1
+#1-Reservatorio Infinito			2-Reservatorio Circular com Manutencao da Pressao
+#3-Reservatorio Circular Selado		4-Reservaotio com Geometria Arbitraria e Selado
+1

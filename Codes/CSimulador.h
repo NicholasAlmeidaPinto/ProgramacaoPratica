@@ -14,6 +14,7 @@ class CSimulador {
 		std::vector<CPressao> reservatorios;
 		int numReser;
 		bool SalvaDados = false;
+		int grade = 500; ///numero de pontos para simulacao
 	public:
 		CSimulador() {}
 		~CSimulador(){}
@@ -24,10 +25,10 @@ class CSimulador {
 		void TrocarReservatorio();
 		void CriarReservatorio();
 		void DestruirReservatorio();
-		void MostrarReservatorios();
 		void SalvarDados();
 		void SalvarTempo(std::vector<double> _Pressao, std::vector<double> _tempo, double _lat, double _lon);
 		void SalvarEspaco(std::vector<double> _Pressao, std::vector<double> _lat, std::vector<double> _on, double _tempo);
+		void MostrarReservatorios();
 		inline double DistanciaEuclidiana(double lat0, double lon0, double lat1, double lon1) {
 				return sqrt((lat0 - lat1)*(lat0 - lat1) + (lon0 - lon1)*(lon0 - lon1));
 		}

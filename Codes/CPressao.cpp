@@ -25,22 +25,39 @@ void CPressao::CalcTempoAdmen() {
 			Viscosidade*ComprTotal*RaioPoco*RaioPoco);
 }
 
+void CPressao::CalcEstocagemAdmen() {
+	if (anp)
+		ConstEstocagemAdmen = 1 / (2 * pi) / (Porosidade*AlturaReser*ComprTotal*RaioPoco*RaioPoco);
+	else
+		ConstEstocagemAdmen = 0.8936 / (Porosidade*AlturaReser*ComprTotal*RaioPoco*RaioPoco);
+}
+
 double CPressao::ReservatorioInfinito(double _Tempo, double _Dist) {
 	double TempoAdmen;
 	double DistAdmen;
 	double PressaoAdmen;
+	double EstocaAdmen = 0;
 
 	TempoAdmen = _Tempo * ConstTempoAdmen;
 	DistAdmen = CalcDistAdmen(_Dist);
+	//EstocaAdmen = Estocagem * ConstEstocagemAdmen;
 
 	double S;
-	if (DistAdmen == 1)
+	if (DistAdmen == 1) { ///Pw -> Pressao no poco, considera fator de pelicula e estocagem
 		S = FatorPelicula;
-	else
-		S = 0;
-
-	PressaoAdmen = 0.5 * log(4 * TempoAdmen / (DistAdmen*exp(gama)));
-	return PressaoDimen(PressaoAdmen + S);
+		if ((S >= 0 && TempoAdmen < (60 + 3.5*S)*EstocaAdmen) || (S < 0 && TempoAdmen < (60 * EstocaAdmen))){
+			PressaoAdmen = TempoAdmen / EstocaAdmen;
+			return PressaoDimen(PressaoAdmen);
+		}
+		else {///Depois do efeito de estocagem
+			PressaoAdmen = 0.5 * log(4 * TempoAdmen / (DistAdmen*exp(gama)));
+			return PressaoDimen(PressaoAdmen + S);
+		}
+	}
+	else { ///Fora do poco
+		PressaoAdmen = 0.5 * log(4 * TempoAdmen / (DistAdmen*exp(gama)));
+		return PressaoDimen(PressaoAdmen);
+	}
 }
 
 double CPressao::ReservatorioCircularManutencaoPressao(double _Tempo, double _Dist) {
@@ -149,12 +166,6 @@ double CPressao::GeometriaArbitrariaSelado(double _Tempo, double _Dist) {
 	return PressaoDimen(PressaoAdmen + S);
 }
 
-void CPressao::MostrarVariaveis() {
-	using namespace std;
-	cout << "\nVazao: " << Vazao;
-	cout << "\nPermeabilidade: " << Permeabilidade;
-
-}
 
 double CPressao::GerarPressao(double _Tempo, double _Dist) {
 	double P;

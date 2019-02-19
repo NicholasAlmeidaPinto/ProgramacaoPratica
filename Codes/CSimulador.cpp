@@ -111,7 +111,7 @@ void CSimulador::SalvarEspaco(std::vector<double> _Pressao, std::vector<double> 
 	_nome = "C:/Users/nicho/Source/Repos/NicholasAlmeidaPinto/ProgramacaoPratica/Codes/DadosGerados/" + _nome + ".data";
 	out.open(_nome);
 
-	out << "TEMPO: " << _tempo << " segundos\n(LATITUDE, LONGITUDE)--> PRESSAO";
+	out << "TEMPO: " << _tempo << " horas\n(LATITUDE, LONGITUDE)--> PRESSAO";
 	for (int i = 0; i < (int)_Pressao.size(); i++) 
 		out << "\n(" << setw(8) << _lat[i] << ", " << setw(9) << _lon[i] << ")--> " << setw(7) << _Pressao[i];
 	out.close();
@@ -131,7 +131,6 @@ void CSimulador::PressaoVariandoTempo() {
 		cin.get();
 	}
 	else {
-		int grade = 100;
 		system("cls");
 		cout << "PRESSAO VARIANDO NO TEMPO";
 
@@ -141,9 +140,9 @@ void CSimulador::PressaoVariandoTempo() {
 		cout << "\nLongitude: ";
 		double lon; cin >> lon;
 
-		cout << "\nInicio do tempo (segundos): ";
+		cout << "\nInicio do tempo (horas): ";
 		double inicio; cin >> inicio;
-		cout << "\nFim do tempo (segundos): ";
+		cout << "\nFim do tempo (horas): ";
 		double fim; cin >> fim;
 
 		vector<double> tempos;
@@ -160,7 +159,6 @@ void CSimulador::PressaoVariandoTempo() {
 			double lat0 = reservatorios[i].latitude();
 			double lon0 = reservatorios[i].longitude();
 			DistanciaPoco = DistanciaEuclidiana(lat0, lon0, lat, lon);
-			//DistanciaPoco = sqrt((lat0 - lat)*(lat0 - lat) + (lon0 - lon)*(lon0 - lon));
 			for (int k = 0; k < grade; k++)
 				PressaoTotal[k] += reservatorios[i].GerarPressao(tempos[k], DistanciaPoco);
 		}
@@ -173,6 +171,7 @@ void CSimulador::PressaoVariandoTempo() {
 			cout << "\n" << setw(8) << tempos[i] << ": " << setw(8) << PressaoTotal[i];
 		cout << "\n----------------\nDigite algo para continuar\n-->";
 		//cin.get();
+		//reservatorios[0].MostrarVariaveis();
 		string abcd; cin >> abcd;
 	}
 }
@@ -188,7 +187,6 @@ void CSimulador::PressaoVariandoEspaco() {
 		vector<double> lon;
 		vector<double> PressaoTotal;
 		double tempoSimulacao;
-		int grade = 100; ///numero de pontos para simulacao
 		double DistanciaPoco; ///distancia euclidiana para simulacao
 
 		system("cls");
@@ -210,7 +208,7 @@ void CSimulador::PressaoVariandoEspaco() {
 			lon.push_back(inicio + i * (fim - inicio) / grade);
 
 		///Tempo analisado para simulacao
-		cout << "\nTempo analisado (segundos): ";
+		cout << "\nTempo analisado (horas): ";
 		cin >> tempoSimulacao;
 
 		///Iniciar vetor nulo de pressao para adicionar valores de todos os reservatorios com +=
